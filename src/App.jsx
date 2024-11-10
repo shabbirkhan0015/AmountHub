@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import QueueManager from "./pages/QueueManager";
 import ContactPage from "./pages/ContactPage";
+import ApplicationPage from "./pages/ApplicationPage";
 
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/queue" element={<QueueManager />} />
+        <Route
+          path="/queue/:applicationId"
+          element={<ApplicationPage />}
+        />{" "}
       </Routes>
     </Router>
   );

@@ -1,4 +1,28 @@
+import React, { useEffect, useState } from "react";
+import { getAllApplication } from "../helper/applicationData";
+import { useNavigate } from "react-router-dom";
 const QueueManager = () => {
+  const [applications, setApplications] = useState([]);
+  const navigate = useNavigate();
+
+  const handleNavigation = (applicationId) => {
+    navigate(`/queue/${applicationId}`);
+  };
+
+  // Fetch applications on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllApplication();
+        setApplications(data);
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching application data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div>
       <div className="flex flex-col h-24 border-b border-black">
@@ -67,41 +91,17 @@ const QueueManager = () => {
           </div>
         </div>
 
-        {/* Data Rows */}
         <div className="flex flex-col bg-gray-100 rounded-lg bg-white text-md">
           <div className="overflow-x-auto flex flex-col">
-            {/* Example data array */}
-            {[
-              {
-                id: "svc-grt1222939322",
-                days: 4,
-                firstName: "John",
-                lastName: "Smith",
-                status: "Approved",
-                stage: "Approved",
-              },
-              {
-                id: "svc-grt1222939323",
-                days: 5,
-                firstName: "Jane",
-                lastName: "Doe",
-                status: "Pending",
-                stage: "Under Review",
-              },
-              {
-                id: "svc-grt1222939324",
-                days: 2,
-                firstName: "Mike",
-                lastName: "Johnson",
-                status: "Rejected",
-                stage: "Closed",
-              },
-            ].map((application, index) => (
+            {applications.map((application, index) => (
               <div
                 key={index}
                 className="flex justify-center bg-white border-gray-200 mb-2"
+                onClick={() => handleNavigation(application.applicationId)}
               >
-                <span className="flex-1 text-center">{application.id}</span>
+                <span className="flex-1 text-center text-emerald-900 text-xs">
+                  {application.applicationId}
+                </span>
                 <span className="flex-1 text-center">
                   {application.days} days
                 </span>
@@ -111,8 +111,8 @@ const QueueManager = () => {
                 <span className="flex-1 text-center">
                   {application.lastName}
                 </span>
-                <span className="flex-1 text-center">{application.status}</span>
-                <span className="flex-1 text-center">{application.stage}</span>
+                <span className="flex-1 text-center">"App"</span>
+                <span className="flex-1 text-center">"App"</span>
               </div>
             ))}
           </div>
