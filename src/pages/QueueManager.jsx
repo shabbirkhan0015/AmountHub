@@ -9,7 +9,6 @@ const QueueManager = () => {
     navigate(`/queue/${applicationId}`);
   };
 
-  // Fetch applications on component mount
   useEffect(() => {
     const fetchData = async () => {
       try {
